@@ -1,0 +1,19 @@
+{
+  "name": "RSS3-Docs",
+  "version": "0.0.1",
+  "description": "Open protocol designed for all our cyber existence in the era of Web 3.0.",
+  "main": "index.js",
+  "authors": {
+    "name": "DIYgod",
+    "email": "i@diygod.me"
+  },
+  "repository": "https://github.com/NaturalSelectionLabs/RSS3-Docs",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.5.3"
+  }
+}
