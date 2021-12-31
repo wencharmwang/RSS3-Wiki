@@ -20,6 +20,8 @@ module.exports = {
         editLinks: true,
         lastUpdated: true,
         sidebarDepth: 2,
+        docsDir: 'src',
+        docsBranch: 'main',
         locales: {
             '/': {
                 lang: 'en-US',
