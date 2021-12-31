@@ -1,12 +1,26 @@
 # Introduction
 
-> Derived from the best out of RSS, RSS3 is an open protocol designed for all our cyber existence in the era of Web 3.0.
+Derived from the best out of RSS, RSS3 is an open protocol designed for all cyber existence.
+
+The right to create, disseminate and distribute information should not be in the hands of centralized governing. It is the basic right of cyber lives.
+
+Gradually over the past two decades, contents and links have been controlled by several data superpowers, who then eats all the profits, privacy and freedom. This centralization also resulted in a terrible environment of user experience innovations: No matter how well your design and engineer your application, there is no way to compete with the data monopolies.
+
+The world has been eager for a new way of constructing social and content networks. RSS used to be the pioneer of its time, now it’s time for us to pick up the baton and carry on.
+
+It is never easy to build something great. Especially when you are confronting the well established giants. However, as developers, we have a firm belief regarding what is right and what should be done. We must dedicate all what we have to overthrow the old world in order to build a new one.
+
+I heard that this is the last spring to be let down, the birds will play in the clouds and the old poems will be sung again.
 
 ## Latest draft
 
+Current version: **v0.3.1**
+
 [Changelog](/protocol/CHANGELOG.md)
 
-🎉 [v0.3.1](/protocol/v0.3.1.md)
+🎉 [View full details](/protocol/v0.3.1.md)
+
+Quick Look Interfaces in TypeScript
 
 ```tsx
 // File ids

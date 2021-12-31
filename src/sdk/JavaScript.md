@@ -1,6 +1,6 @@
 # RSS3 SDK for JavaScript
 
-JavaScript SDK for [RSS3-Hub](https://github.com/NaturalSelectionLabs/RSS3-Hub)
+[Source code](https://github.com/NaturalSelectionLabs/RSS3-SDK-for-JavaScript)
 
 Compatible with v0.3.1 of [RSS3 protocol](https://github.com/NaturalSelectionLabs/RSS3)
 
@@ -9,15 +9,25 @@ Compatible with v0.3.1 of [RSS3 protocol](https://github.com/NaturalSelectionLab
 
 ## Install
 
+<code-group>
+<code-block title="yarn" active>
 ```bash
 yarn add rss3
 ```
+</code-block>
+
+<code-block title="npm">
+```bash
+npm install rss3 --save
+```
+</code-block>
+</code-group>
+
+## Usage
 
 ```js
 import RSS3 from 'rss3';
 ```
-
-## Usage
 
 ### Initialization
 
@@ -63,8 +73,8 @@ Example:
 
 **MetaMask or other ethereum compatible wallet**
 
-ethers
-
+<code-group>
+<code-block title="ethers" active>
 ```ts
 import RSS3 from 'rss3';
 import { ethers } from 'ethers';
@@ -73,14 +83,14 @@ const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner();
 
 const rss3 = new RSS3({
-    endpoint: '',
+    endpoint: 'https://prenode.rss3.dev',
     address: await signer.getAddress(),
     sign: async (data) => await signer.signMessage(data),
 });
 ```
+</code-block>
 
-web3.js
-
+<code-block title="web3.js">
 ```ts
 import RSS3 from 'rss3';
 import Web3 from 'web3';
@@ -88,17 +98,19 @@ import Web3 from 'web3';
 const web3 = new Web3(window.ethereum);
 const address = (await web3.eth.getAccounts())[0];
 const rss3 = new RSS3({
-    endpoint: '',
+    endpoint: 'https://prenode.rss3.dev',
     address,
     sign: async (data) => await web3.eth.personal.sign(data, address),
 });
 ```
+</code-block>
+</code-group>
 
 **Brand new account**
 
 ```ts
 const rss3 = new RSS3({
-    endpoint: '',
+    endpoint: 'https://prenode.rss3.dev',
 });
 ```
 
@@ -106,7 +118,7 @@ const rss3 = new RSS3({
 
 ```ts
 const rss3 = new RSS3({
-    endpoint: '',
+    endpoint: 'https://prenode.rss3.dev',
     mnemonic: 'xxx',
     mnemonicPath: 'xxx',
 });
@@ -116,7 +128,7 @@ const rss3 = new RSS3({
 
 ```ts
 const rss3 = new RSS3({
-    endpoint: '',
+    endpoint: 'https://prenode.rss3.dev',
     privateKey: '0xxxx',
 });
 ```
@@ -127,27 +139,35 @@ const rss3 = new RSS3({
 
 Please note that changes will only be synced to the node after `files.sync()` is successfully executed
 
+<code-group>
+<code-block title="types" active>
 ```ts
 files.sync(): string[]
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const changedFiles = rss3.files.sync();
 ```
+</code-block>
+</code-group>
 
 **files.get()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 files.get(fileID: string): Promise<RSS3Content>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const file = await rss3.files.get(rss3.account.address);
 ```
+</code-block>
+</code-group>
 
 ### Account
 
@@ -177,24 +197,30 @@ account.address: string
 
 **profile.get()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 profile.get(personaID: string = account.address): Promise<RSS3Profile>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
-const profile = rss3.profile.get();
+const file = await rss3.files.get(rss3.account.address);
 ```
+</code-block>
+</code-group>
 
 **profile.patch()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 profile.patch(profile: RSS3Profile): Promise<RSS3Profile>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const newProfile = await rss3.profile.patch({
     name: 'RSS3',
@@ -202,59 +228,75 @@ const newProfile = await rss3.profile.patch({
     bio: 'RSS3 is an open protocol designed for content and social networks in the Web 3.0 era.',
 });
 ```
+</code-block>
+</code-group>
 
 **profile.getList()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 profile.get(personas: string[]): Promise<(RSS3Profile & { persona: string })[]>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const profiles = rss3.profile.getList([
     '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944',
     '0xee8fEeb6D0c2fC02Ef41879514A75d0E791b5061',
 ]);
 ```
+</code-block>
+</code-group>
 
 ### Profile.accounts
 
 **profile.accounts.getSigMessage()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 profile.accounts.getSigMessage(account: RSS3Account): Promise<string>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const sigMessage = await rss3.profile.accounts.getSigMessage({
     id: utils.id.getAccount('EVM+', '0x1234567890123456789012345678901234567890'),
     tags: ['test'],
 });
 ```
+</code-block>
+</code-group>
 
 **profile.accounts.getList()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 profile.accounts.getList(persona?: string): Promise<RSS3Account[]>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const list = await rss3.profile.accounts.getList('0x1234567890123456789012345678901234567890');
 ```
+</code-block>
+</code-group>
 
 **profile.accounts.post()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 profile.accounts.post(account: RSS3Account): Promise<RSS3Account>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 import { utils } from 'rss3';
 
@@ -266,25 +308,33 @@ const signature = mySignFun(await rss3.profile.accounts.getSigMessage(account));
 account.signature = signature;
 const account = await rss3.profile.accounts.post(account);
 ```
+</code-block>
+</code-group>
 
 **profile.accounts.delete()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 profile.accounts.delete(id: string): Promise<string>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const account = await rss3.profile.accounts.delete(
     utils.id.getAccount('EVM+', '0x1234567890123456789012345678901234567890'),
 );
 ```
+</code-block>
+</code-group>
 
 ### Items
 
 **items.getListByPersona()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 items.getListByPersona(options: {
     limit: number;
@@ -294,9 +344,9 @@ items.getListByPersona(options: {
     fieldLike?: string;
 }): Promise<(RSS3CustomItem | RSS3AutoItem)[]>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const followingTimeline = await rss3.items.getListByPersona({
     persona: '0x1234567890123456789012345678901234567890',
@@ -310,127 +360,219 @@ const personaTimeline = await rss3.items.getListByPersona({
     tsp: '2021-12-06T13:59:57.030Z',
 });
 ```
+</code-block>
+</code-group>
 
 ### Items.auto
 
 **items.auto.getListFile()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 items.auto.getListFile(persona: string, index?: number): Promise<RSS3AutoItemsList | null>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const items = await rss3.items.auto.getListFile(rss3.account.address, -1);
 ```
+</code-block>
+</code-group>
 
 **items.auto.getList()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 items.auto.getList(persona: string, breakpoint?: (file: RSS3AutoItemsList) => boolean): Promise<RSS3AutoItem[]>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const autoItems = await rss3.auto.items.getList('0x1234567890123456789012345678901234567890');
 ```
+</code-block>
+</code-group>
 
 **items.auto.backlinks.getListFile()**
 
+<code-group>
+<code-block title="types" active>
+```ts
+items.auto.getListFile(persona: string, index?: number): Promise<RSS3AutoItemsList | null>
+```
+</code-block>
+
+<code-block title="example">
+```ts
+const backlinks = await rss3.items.auto.getListFile('0x1234567890123456789012345678901234567890', -1);
+```
+</code-block>
+</code-group>
+
 **items.auto.backlinks.getList()**
+
+<code-group>
+<code-block title="types" active>
+```ts
+items.auto.backlinks.getList(persona: string, breakpoint?: ((file: RSS3AutoItemsList) => boolean) | undefined): Promise<RSS3AutoItem[]>
+```
+</code-block>
+
+<code-block title="example">
+```ts
+const backlinks = await rss3.items.auto.backlinks.getList('0x1234567890123456789012345678901234567890');
+```
+</code-block>
+</code-group>
 
 ### Items.custom
 
 **items.custom.getListFile()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 items.custom.getListFile(persona: string, index?: number): Promise<RSS3CustomItemsList | null>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const items = await rss3.items.custom.getListFile(rss3.account.address, -1);
 ```
+</code-block>
+</code-group>
 
 **items.custom.getList()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 items.custom.getList(persona: string, breakpoint?: (file: RSS3AutoItemsList) => boolean): Promise<RSS3AutoItem[]>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const customItems = await rss3.custom.items.getList('0x1234567890123456789012345678901234567890');
 ```
+</code-block>
+</code-group>
 
 **item.custom.post()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 item.custom.post(itemIn: Omit<RSS3CustomItem, 'id' | 'date_created' | 'date_updated'>): Promise<RSS3CustomItem>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const item = await rss3.custom.item.post({
     title: 'Hello RSS3',
     summary: 'RSS3 is an open protocol designed for content and social networks in the Web 3.0 era.',
 });
 ```
+</code-block>
+</code-group>
 
 **item.custom.patch**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 item.custom.patch(item: Partial<RSS3CustomItem> & {
     id: RSS3CustomItemID;
 }): Promise<RSS3CustomItem | null>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const newItem = await rss3.item.custom.patch({
     id: '0x1234567890123456789012345678901234567890-item-custom-0',
     title: 'Hi RSS3',
 });
 ```
+</code-block>
+</code-group>
 
 **items.custom.backlinks.getListFile()**
 
+<code-group>
+<code-block title="types" active>
+```ts
+items.custom.getListFile(persona: string, index?: number): Promise<RSS3CustomItemsList | null>
+```
+</code-block>
+
+<code-block title="example">
+```ts
+const backlinks = await rss3.items.custom.getListFile('0x1234567890123456789012345678901234567890', -1);
+```
+</code-block>
+</code-group>
+
 **items.custom.backlinks.getList()**
+
+<code-group>
+<code-block title="types" active>
+```ts
+items.custom.backlinks.getList(persona: string, breakpoint?: ((file: RSS3CustomItemsList) => boolean) | undefined): Promise<RSS3CustomItem[]>
+```
+</code-block>
+
+<code-block title="example">
+```ts
+const backlinks = await rss3.items.custom.backlinks.getList('0x1234567890123456789012345678901234567890');
+```
+</code-block>
+</code-group>
 
 ### Links
 
 **links.getListFile()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 links.getListFile(persona: string, id: string, index?: number): Promise<RSS3LinksList | null>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const followers = await rss3.links.getListFile(rss3.account.address, 'following', -1);
 ```
+</code-block>
+</code-group>
 
 **links.getList()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 links.getList(persona: string, id: string, breakpoint?: ((file: RSS3LinksList) => boolean) | undefined): Promise<string[]>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const following = await rss3.links.getList(rss3.account.address, 'following');
 ```
+</code-block>
+</code-group>
 
 **links.postList()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 links.postList(links: {
     tags?: string[];
@@ -442,18 +584,22 @@ links.postList(links: {
     list?: RSS3ID[];
 }>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const following = await rss3.links.postList({
     id: 'following',
     list: ['0xd0B85A7bB6B602f63B020256654cBE73A753DFC4'],
 });
 ```
+</code-block>
+</code-group>
 
 **links.deleteList()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 links.deleteList(id: string): Promise<{
     tags?: string[] | undefined;
@@ -461,15 +607,19 @@ links.deleteList(id: string): Promise<{
     list?: string | undefined;
 } | undefined>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const following = await rss3.links.deleteList('following');
 ```
+</code-block>
+</code-group>
 
 **links.patchListTags()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 links.patchListTags(id: string, tags: string[]): Promise<{
     tags?: string[] | undefined;
@@ -477,158 +627,204 @@ links.patchListTags(id: string, tags: string[]): Promise<{
     list?: string | undefined;
 }>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const following = await rss3.links.patchListTags('following', ['test']);
 ```
+</code-block>
+</code-group>
 
 **links.post()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 links.post(id: string, personaID: string): Promise<RSS3LinksList | undefined>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const following = await rss3.links.post('following', '0xd0B85A7bB6B602f63B020256654cBE73A753DFC4');
 ```
+</code-block>
+</code-group>
 
 **links.delete()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 links.delete(id: string, personaID: string): Promise<string[] | null>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const following = await rss3.links.delete('following', '0xd0B85A7bB6B602f63B020256654cBE73A753DFC4');
 ```
+</code-block>
+</code-group>
 
 ### Backlinks
 
 **backlinks.getListFile()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 backlinks.getListFile(persona: string, id: string, index?: number): Promise<RSS3BacklinksList | null>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const followers = await rss3.backlinks.getListFile(rss3.account.address, 'following', -1);
 ```
+</code-block>
+</code-group>
 
 **backlinks.getList()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 backlinks.getList(persona: string, id: string, breakpoint?: ((file: RSS3BacklinksList) => boolean) | undefined): Promise<string[]>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const followers = await rss3.backlinks.getList(rss3.account.address, 'following');
 ```
+</code-block>
+</code-group>
 
 ### Assets
 
 **assets.getDetails()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 assets.getDetails(options: {
     assets: string[];
     full?: boolean;
 }): Promise<AnyObject[]>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const details = await rss3.assets.getDetails({
     assets: ['xxx', 'xxx'],
     full: true,
 });
 ```
+</code-block>
+</code-group>
 
 ### Assets.auto
 
 **assets.auto.getListFile()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 assets.auto.getListFile(persona: string, index?: number): Promise<RSS3AutoAssetsList | null>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const assets = await rss3.assets.auto.getListFile(rss3.account.address, -1);
 ```
+</code-block>
+</code-group>
 
 **assets.auto.getList()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 assets.auto.getList(persona: string, breakpoint?: (file: RSS3AutoAssetsList) => boolean): Promise<RSS3AutoAsset[]>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const autoAssets = await rss3.auto.assets.getList('0x1234567890123456789012345678901234567890');
 ```
+</code-block>
+</code-group>
 
 ### Assets.custom
 
 **assets.custom.getListFile()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 assets.custom.getListFile(persona: string, index?: number): Promise<RSS3AutoAssetsList | null>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const assets = await rss3.assets.custom.getListFile(rss3.account.address, -1);
 ```
+</code-block>
+</code-group>
 
 **assets.custom.getList()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 assets.custom.getList(persona: string, breakpoint?: (file: RSS3CustomAssetsList) => boolean): Promise<RSS3CustomAsset[]>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const customAssets = await rss3.custom.assets.getList('0x1234567890123456789012345678901234567890');
 ```
+</code-block>
+</code-group>
 
 **asset.custom.post()**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 asset.custom.post(asset: RSS3CustomAsset): Promise<RSS3CustomAsset>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const asset = await rss3.custom.asset.post('custom-gk-q-10035911');
 ```
+</code-block>
+</code-group>
 
 **asset.custom.delete**
 
+<code-group>
+<code-block title="types" active>
 ```ts
 asset.custom.delete(asset: RSS3CustomAsset): Promise<RSS3CustomAsset[] | undefined>
 ```
+</code-block>
 
-Example:
-
+<code-block title="example">
 ```ts
 const otherAsset = await rss3.asset.custom.delete('custom-gk-q-10035911');
 ```
+</code-block>
+</code-group>
 
 ## Development
 

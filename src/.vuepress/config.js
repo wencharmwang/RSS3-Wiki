@@ -7,11 +7,6 @@ module.exports = {
             title: 'RSS3',
             description: description,
         },
-        '/cn/': {
-            lang: 'zh-CN',
-            title: 'RSS3',
-            description: description,
-        },
     },
 
     head: [
@@ -24,6 +19,7 @@ module.exports = {
         repo: 'NaturalSelectionLabs/RSS3-Docs',
         editLinks: true,
         lastUpdated: true,
+        sidebarDepth: 2,
         locales: {
             '/': {
                 lang: 'en-US',
@@ -54,10 +50,6 @@ module.exports = {
                     {
                         text: 'Partners',
                         link: '/partners'
-                    },
-                    {
-                        text: 'Support RSS3',
-                        link: '/support-rss3'
                     },
                 ],
                 sidebar: {
@@ -100,12 +92,6 @@ module.exports = {
                         },
                     ],
                 },
-            },
-            '/cn/': {
-                lang: 'zh-CN',
-                label: '简体中文',
-                editLinkText: '在 GitHub 上编辑此页',
-                lastUpdated: '上次更新',
             },
         },
     },
