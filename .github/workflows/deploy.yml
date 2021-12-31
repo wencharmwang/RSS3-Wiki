@@ -13,4 +13,3 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BUILD_SCRIPT: yarn && yarn build
         BUILD_DIR: src/.vuepress/dist/
-        CNAME: docs.rss3.dev
