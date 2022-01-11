@@ -1,6 +1,6 @@
 # Introduction
 
-Derived from the best out of RSS, RSS3 is an open protocol designed for all cyber existence.
+Derived from the best out of RSS, RSS3 is an open, neutral, and decentralized protocol designed for every cyber existence.
 
 The right to create, disseminate and distribute information should not be in the hands of centralized governing. It is the basic right of cyber lives.
 

@@ -8,7 +8,7 @@ sidebar: auto
 
 [Source code](https://github.com/NaturalSelectionLabs/RSS3-Pre-Node)
 
-Our goal is to make a fully decentralized node program, but it is still under development, and only a temporary centralized version is currently available, you can only use <https://prenode.rss3.dev> as the node entry point.
+While actively working on our ultimate goal, a fully decentralized node, a temporarily centralized version is currently available, you can use <https://prenode.rss3.dev> as the node entry point.
 
 ## Supported auto assets/items
 
@@ -58,7 +58,7 @@ Get details of two assets `EVM+-0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944-Ether
 
 -   GET `/items/list`
 
-Get the aggregated auto and custom items sorted by time
+Get the aggregated auto and custom items, sorted by time
 
 Query parameter
 
