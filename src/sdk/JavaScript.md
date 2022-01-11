@@ -31,20 +31,20 @@ import RSS3 from 'rss3';
 
 ### Initialization
 
-There are 4 ways to initialize the sdk
+There are 4 ways to initialize the SDK:
 
 -   Initialize with external signature method (recommended)
--   create a brand new account
+-   Create a brand new account
 -   Initialize with mnemonic
 -   Initialize with private key
 
-For security reasons, unless there is a specific need, you should initialize with external signature method provided by the wallet or secure device.
+For security reasons, unless there is a specific need, you should initialize with external signature method provided by a wallet (hot or cold).
 
-And `agentSign` is a kind of agent signature, its principle can refer to the `agent_id` and `agent_signature` field in [RSS3 protocol](https://github.com/NaturalSelectionLabs/RSS3), the function is that the user only needs to sign when the first change, subsequent changes use agent signature, only need to save the agent information in a suitable and save place through the `agentStorage` parameter, the default behavior is saved in the cookie
+And `agentSign` is a kind of agent signature, refer to the `agent_id` and `agent_signature` fields in [RSS3 protocol](https://github.com/NaturalSelectionLabs/RSS3) for more information. Once the user has initialized the SDK with an external signature, an agent signature is generated to sign subsequent changes. The agent information is stored in a suitable and secure place through the `agentStorage` parameter, the default location is the cookies.
 
 ```ts
 interface IOptions {
-    endpoint: string; // RSS3 network endpoint
+    endpoint: string; // The RSS3 network endpoint
     agentSign?: boolean;
     agentStorage?: {
         set: (key: string, value: string) => Promise<void>;
@@ -137,7 +137,7 @@ const rss3 = new RSS3({
 
 **files.sync()**
 
-Please note that changes will only be synced to the node after `files.sync()` is successfully executed
+Please note that changes will only be synced to the node after `files.sync()` has been successfully executed
 
 <code-group>
 <code-block title="types" active>
@@ -173,7 +173,7 @@ const file = await rss3.files.get(rss3.account.address);
 
 **account.mnemonic**
 
-If initialized with privateKey or custom sign function, then this value is undefined
+If initialized with privateKey or a custom sign function, then this value is undefined
 
 ```ts
 account.mnemonic: string | undefined
@@ -181,7 +181,7 @@ account.mnemonic: string | undefined
 
 **account.privateKey**
 
-If initialized with custom sign function, then this value is undefined
+If initialized with a custom sign function, then this value is undefined
 
 ```ts
 account.privateKey: string | undefined
