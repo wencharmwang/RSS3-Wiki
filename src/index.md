@@ -6,10 +6,10 @@ actionText: Quick Start →
 actionLink: /protocol/
 features:
 - title: Open
-  details: It goes without saying that the whole RSS3 project, including the protocol itself and all other supporting layers like hosting and indexing should be open source and participatory for all.
+  details: It goes without saying that the whole RSS3 project, including the RSS3 Protocol itself and all other supporting layers such as hosting and indexing, should be open source and participatory for all.
 - title: Distributed
-  details: The ultimate distributed control is to have every cyber persona control its own data. And this means both indexing files and content file should be under distributed hosting, and the right to edit the files are determined by their key pairs.
+  details: The ultimate distributed control enables every cyber existence to control its own data. And this means both indexing files and content file should be under distributed hosting, and the right to edit the files are determined by their key pairs.
 - title: Inclusive
-  details: We need the protocol to support very different types of functionalities and applications so that innovations can continue to happen.
+  details: We need the Protocol to support varying functionalities and applications, so that innovations can continue to thrive.
 footer: Made by RSS3 Committee with ❤️
 ---
