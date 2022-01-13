@@ -351,12 +351,12 @@ items.getListByPersona(options: {
 const followingTimeline = await rss3.items.getListByPersona({
     persona: '0x1234567890123456789012345678901234567890',
     linkID: 'following',
-    limit: 10;
+    limit: 10,
     tsp: '2021-12-06T13:59:57.030Z',
 });
 const personaTimeline = await rss3.items.getListByPersona({
     persona: '0x1234567890123456789012345678901234567890',
-    limit: 10;
+    limit: 10,
     tsp: '2021-12-06T13:59:57.030Z',
 });
 ```
@@ -458,7 +458,7 @@ items.custom.getList(persona: string, breakpoint?: (file: RSS3AutoItemsList) => 
 
 <code-block title="example">
 ```ts
-const customItems = await rss3.custom.items.getList('0x1234567890123456789012345678901234567890');
+const customItems = await rss3.items.custom.getList('0x1234567890123456789012345678901234567890');
 ```
 </code-block>
 </code-group>
@@ -474,7 +474,7 @@ item.custom.post(itemIn: Omit<RSS3CustomItem, 'id' | 'date_created' | 'date_upda
 
 <code-block title="example">
 ```ts
-const item = await rss3.custom.item.post({
+const item = await rss3.item.custom.post({
     title: 'Hello RSS3',
     summary: 'RSS3 is an open protocol designed for content and social networks in the Web 3.0 era.',
 });
