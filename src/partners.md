@@ -1,7 +1,0 @@
----
-sidebar: auto
----
-
-# Partners
-
-TODO

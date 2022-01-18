@@ -30,66 +30,56 @@ module.exports = {
                 lastUpdated: 'Last Updated',
                 nav: [
                     {
-                        text: 'Protocol',
-                        link: '/protocol/',
-                    },
-                    {
-                        text: 'SDK',
-                        link: '/sdk/'
-                    },
-                    {
-                        text: 'Node',
-                        link: '/node'
+                        text: 'Guide',
+                        link: '/guide/',
                     },
                     {
                         text: 'Data',
                         link: '/data'
                     },
                     {
-                        text: 'Applications',
-                        link: '/apps/'
+                        text: 'Support RSS3',
+                        link: '/support'
                     },
                     {
-                        text: 'Partners',
-                        link: '/partners'
+                        text: 'Learn More',
+                        items: [
+                            {
+                                text: 'Blog',
+                                link: 'https://rss3.notion.site/'
+                            },
+                            {
+                                text: 'Whitepaper',
+                                link: 'https://rss3.io/#/whitepaper'
+                            },
+                            {
+                                text: 'Brand Kit',
+                                link: 'https://rss3.notion.site/RSS3-Brand-Kit-251e768345684ba9acd038d79c6899b8'
+                            },
+                            {
+                                text: 'Join Us',
+                                link: 'https://rss3.notion.site/Open-Source-Remote-RSS3-Offering-the-Dopest-Positions-Frontend-Full-stack-Decentralized-System--b6fdbffee017449797397f45340de9d4'
+                            }
+                        ]
                     },
                 ],
                 sidebar: {
-                    '/protocol/': [
+                    '/guide/': [
                         {
-                            title: 'Protocol',
+                            title: 'Guide',
                             collapsable: false,
                             children: [
                                 '',
-                                'CHANGELOG',
-                                'v0.3.1',
-                                'v0.3.0',
-                                'v0.2.0',
-                                'v0.1.1',
-                                'v0.1.0',
-                                'v0.1.0-alpha.0',
                             ],
                         },
-                    ],
-                    '/sdk/': [
                         {
-                            title: 'SDK',
+                            title: 'Getting Started',
                             collapsable: false,
+                            sidebarDepth: 1,
                             children: [
-                                '',
-                                'JavaScript',
-                            ],
-                        },
-                    ],
-                    '/apps/': [
-                        {
-                            title: 'Applications',
-                            collapsable: false,
-                            children: [
-                                '',
-                                'revery',
-                                'pass',
-                                'reid',
+                                'protocol',
+                                'sdk',
+                                'api',
                             ],
                         },
                     ],

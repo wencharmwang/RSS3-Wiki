@@ -1,8 +1,4 @@
----
-sidebar: auto
----
-
-# Node
+# API
 
 ## Introduction
 

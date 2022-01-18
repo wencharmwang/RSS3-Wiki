@@ -1,4 +1,10 @@
-# RSS3 SDK for JavaScript
+# SDK
+
+## List
+
+- [RSS3 SDK for JavaScript](#rss3-sdk-for-javascript)
+
+## RSS3 SDK for JavaScript
 
 [Source code](https://github.com/NaturalSelectionLabs/RSS3-SDK-for-JavaScript)
 
@@ -7,7 +13,7 @@ Compatible with v0.3.1 of [RSS3 protocol](https://github.com/NaturalSelectionLab
 [![test](https://github.com/NaturalSelectionLabs/RSS3-SDK-for-JavaScript/actions/workflows/test.yml/badge.svg)](https://github.com/NaturalSelectionLabs/RSS3-SDK-for-JavaScript/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/NaturalSelectionLabs/RSS3-SDK-for-JavaScript/branch/develop/graph/badge.svg?token=361AKFS8AH)](https://codecov.io/gh/NaturalSelectionLabs/RSS3-SDK-for-JavaScript)
 
-## Install
+### Install
 
 <code-group>
 <code-block title="yarn" active>
@@ -23,13 +29,13 @@ npm install rss3 --save
 </code-block>
 </code-group>
 
-## Usage
+### Usage
 
 ```js
 import RSS3 from 'rss3';
 ```
 
-### Initialization
+#### Initialization
 
 There are 4 ways to initialize the SDK:
 
@@ -133,7 +139,7 @@ const rss3 = new RSS3({
 });
 ```
 
-### Files
+#### Files
 
 **files.sync()**
 
@@ -169,7 +175,7 @@ const file = await rss3.files.get(rss3.account.address);
 </code-block>
 </code-group>
 
-### Account
+#### Account
 
 **account.mnemonic**
 
@@ -193,7 +199,7 @@ account.privateKey: string | undefined
 account.address: string
 ```
 
-### Profile
+#### Profile
 
 **profile.get()**
 
@@ -250,7 +256,7 @@ const profiles = rss3.profile.getList([
 </code-block>
 </code-group>
 
-### Profile.accounts
+#### Profile.accounts
 
 **profile.accounts.getSigMessage()**
 
@@ -329,7 +335,7 @@ const account = await rss3.profile.accounts.delete(
 </code-block>
 </code-group>
 
-### Items
+#### Items
 
 **items.getListByPersona()**
 
@@ -363,7 +369,7 @@ const personaTimeline = await rss3.items.getListByPersona({
 </code-block>
 </code-group>
 
-### Items.auto
+#### Items.auto
 
 **items.auto.getListFile()**
 
@@ -429,7 +435,7 @@ const backlinks = await rss3.items.auto.backlinks.getList('0x1234567890123456789
 </code-block>
 </code-group>
 
-### Items.custom
+#### Items.custom
 
 **items.custom.getListFile()**
 
@@ -535,7 +541,7 @@ const backlinks = await rss3.items.custom.backlinks.getList('0x12345678901234567
 </code-block>
 </code-group>
 
-### Links
+#### Links
 
 **links.getListFile()**
 
@@ -668,7 +674,7 @@ const following = await rss3.links.delete('following', '0xd0B85A7bB6B602f63B0202
 </code-block>
 </code-group>
 
-### Backlinks
+#### Backlinks
 
 **backlinks.getListFile()**
 
@@ -702,7 +708,7 @@ const followers = await rss3.backlinks.getList(rss3.account.address, 'following'
 </code-block>
 </code-group>
 
-### Assets
+#### Assets
 
 **assets.getDetails()**
 
@@ -726,7 +732,7 @@ const details = await rss3.assets.getDetails({
 </code-block>
 </code-group>
 
-### Assets.auto
+#### Assets.auto
 
 **assets.auto.getListFile()**
 
@@ -760,7 +766,7 @@ const autoAssets = await rss3.auto.assets.getList('0x123456789012345678901234567
 </code-block>
 </code-group>
 
-### Assets.custom
+#### Assets.custom
 
 **assets.custom.getListFile()**
 
@@ -826,7 +832,7 @@ const otherAsset = await rss3.asset.custom.delete('custom-gk-q-10035911');
 </code-block>
 </code-group>
 
-## Development
+### Development
 
 ```bash
 yarn

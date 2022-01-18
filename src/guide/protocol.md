@@ -1,26 +1,26 @@
-# Introduction
+# Protocol
+
+Project Link: <https://github.com/NaturalSelectionLabs/RSS3>
 
 Derived from the best out of RSS, RSS3 is an open, neutral, and decentralized protocol designed for every cyber existence.
 
-The right to create, disseminate and distribute information should not be in the hands of centralized governing. It is the basic right of cyber lives.
-
-Gradually over the past two decades, contents and links have been controlled by several data superpowers, who then eats all the profits, privacy and freedom. This centralization also resulted in a terrible environment of user experience innovations: No matter how well your design and engineer your application, there is no way to compete with the data monopolies.
-
-The world has been eager for a new way of constructing social and content networks. RSS used to be the pioneer of its time, now it’s time for us to pick up the baton and carry on.
-
-It is never easy to build something great. Especially when you are confronting the well established giants. However, as developers, we have a firm belief regarding what is right and what should be done. We must dedicate all what we have to overthrow the old world in order to build a new one.
-
-I heard that this is the last spring to be let down, the birds will play in the clouds and the old poems will be sung again.
+RSS3 is a protocol that was created to unify information formats and facilitate the free flow of information. Its index file contains several sections, mainly `profile` `links` `items` `assets`.
 
 ## Latest draft
 
 Current version: **v0.3.1**
 
-[Changelog](/protocol/CHANGELOG.md)
+RSS3 is in the form of files on the user side. There are two types of RSS3 files - RSS3Index and RSS3List, and each persona generated file is signed by the persona.
 
-🎉 [View full details](/protocol/v0.3.1.md)
+The index file is the entry file named after persona's ethereum address that defines:
 
-Quick Look Interfaces in TypeScript
+- `profile`: The persona's name, avatar, bio and verified accounts
+- `links`: Relationships of current persona with other personas
+- `assets`: Custom assets are the assets posted by the persona, auto assets are the digital assets owned by the persona collected by the node, such as NFT
+- `items`: Custom items are the content posted by the persona, auto items are the dynamics of the persona's related account collected by the node, such as the acquisition dynamics of NFT
+
+<details>
+<summary><strong>Quick Look Interfaces in TypeScript</strong></summary>
 
 ```tsx
 // File ids
@@ -92,13 +92,13 @@ interface RSS3Index extends RSS3SignedBase {
     }[];
 
     items?: {
-        list_custom?: RSS3CustomItemsListID;
-        list_auto?: RSS3AutoItemsListID;
+        list_custom?: RSS3CustomItemsListID; // Items automatically indexed by nodes
+        list_auto?: RSS3AutoItemsListID; // Items posted by personas themselves
     };
 
     assets?: {
-        list_custom?: RSS3CustomAssetsListID;
-        list_auto?: RSS3AutoAssetsListID;
+        list_custom?: RSS3CustomAssetsListID; // Assets automatically indexed by nodes
+        list_auto?: RSS3AutoAssetsListID; // Assets posted by personas themselves
     };
 }
 
@@ -180,14 +180,19 @@ interface RSS3AutoItem extends RSS3ItemBase {
     };
 }
 ```
+</details>
+
+🎉 [View full details](https://github.com/NaturalSelectionLabs/RSS3/blob/main/versions/v0.3.1.md)
 
 ## Historical drafts
 
-- [v0.3.0](/protocol/v0.3.0.md)
-- [v0.2.0](/protocol/v0.2.0.md)
-- [v0.1.1](/protocol/v0.1.1.md)
-- [v0.1.0](/protocol/v0.1.0.md)
-- [v0.1.0-alpha.0](/protocol/v0.1.0-alpha.0.md)
+[Changelog](https://github.com/NaturalSelectionLabs/RSS3/blob/main/CHANGELOG.md)
+
+- [v0.3.0](https://github.com/NaturalSelectionLabs/RSS3/blob/main/versions/v0.3.0.md)
+- [v0.2.0](https://github.com/NaturalSelectionLabs/RSS3/blob/main/versions/v0.2.0.md)
+- [v0.1.1](https://github.com/NaturalSelectionLabs/RSS3/blob/main/versions/v0.1.1.md)
+- [v0.1.0](https://github.com/NaturalSelectionLabs/RSS3/blob/main/versions/v0.1.0.md)
+- [v0.1.0-alpha.0](https://github.com/NaturalSelectionLabs/RSS3/blob/main/versions/v0.1.0-alpha.0.md)
 
 ## Contributing
 
@@ -196,20 +201,3 @@ RSS3 is a community-based project, built with an open ecosystem and creative dev
 - Report irrationality or request feature in [issues](https://github.com/NaturalSelectionLabs/RSS3/issues)
 - Discussion in [discussions](https://github.com/NaturalSelectionLabs/RSS3/discussions)
 - Submit your [pull request](https://github.com/NaturalSelectionLabs/RSS3/pulls)
-
-## Contact
-
-[![Twitter][twitter-shield]][twitter-url]
-[![Telegram][telegram-shield]][telegram-url]
-[![Discord][discord-shield]][discord-url]
-
-RSS3 - [@rss3_](https://twitter.com/rss3_) - contact@rss3.io
-
-Project Link: [https://github.com/NaturalSelectionLabs/RSS3](https://github.com/NaturalSelectionLabs/RSS3)
-
-[twitter-shield]: https://img.shields.io/twitter/follow/RSS3_?style=flat-square&logo=twitter
-[twitter-url]: https://twitter.com/rss3_
-[telegram-shield]: https://img.shields.io/badge/Telegram-Channel-blue?style=flat-square&logo=telegram
-[telegram-url]: https://t.me/joinchat/jhhncmdayvNlMDgx
-[discord-shield]: https://img.shields.io/badge/Discord-Server-blueviolet?style=flat-square&logo=discord
-[discord-url]: https://bit.ly/3aSYvPA

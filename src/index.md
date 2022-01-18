@@ -3,7 +3,7 @@ home: true
 heroImage: https://rss3.mypinata.cloud/ipfs/QmUG6H3Z7D5P511shn7sB4CPmpjH5uZWu4m5mWX7U3Gqbu
 tagline: Derived from the best out of RSS, RSS3 is an open, neutral, and decentralized protocol designed for every cyber existence.
 actionText: Quick Start →
-actionLink: /protocol/
+actionLink: /guide/
 features:
 - title: Open
   details: It goes without saying that the whole RSS3 project, including the RSS3 Protocol itself and all other supporting layers such as hosting and indexing, should be open source and participatory for all.
