@@ -8,7 +8,7 @@
 
 RSS3 is a protocol that was created to unify information formats and facilitate the free flow of information. Its index file contains several sections, mainly `profile` `links` `items` `assets`. Details of the RSS3 protocol can be found [here](/guide/protocol.html).
 
-After understanding the content of the protocol, the quickest way to get started is to use the [SDK](/sdk/), or to request [API](/api/) directly.
+After understanding the content of the protocol, the quickest way to get started is to use the [SDK](/guide/sdk.html), or to request [API](/guide/api.html) directly.
 
 Reading [our white paper](https://rss3.io/#/whitepaper) is also a good way to learn more about us.
 
