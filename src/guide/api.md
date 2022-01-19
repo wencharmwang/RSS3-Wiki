@@ -74,7 +74,7 @@ Get aggregated items of `0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944`
 
 Get aggregated items of personas who followed by `0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944`
 
-<https://prenode.rss3.dev/items/list?limit=5&persona=0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944>
+<https://prenode.rss3.dev/items/list?limit=5&persona=0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944&linkID=following>
 
 Get NFT and Gitcoin related aggregated items of `0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944`
 

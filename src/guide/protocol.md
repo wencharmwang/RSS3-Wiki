@@ -2,9 +2,13 @@
 
 Project Link: <https://github.com/NaturalSelectionLabs/RSS3>
 
-Derived from the best out of RSS, RSS3 is an open, neutral, and decentralized protocol designed for every cyber existence.
-
 RSS3 is a protocol that was created to unify information formats and facilitate the free flow of information. Its index file contains several sections, mainly `profile` `links` `items` `assets`.
+
+The protocol is compatible and can be easily integrated with other products, for example you can
+
+- Integrate with various name services to make it easier to find personas' files
+- Integrate with various content platforms to sync assets and items to files
+- Integrate with various relationship links platforms to subscribe content using external links
 
 ## Latest draft
 

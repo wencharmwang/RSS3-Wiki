@@ -22,10 +22,11 @@ If you would like to use RSS3 on your project, we would be delighted if you [let
 
 Feel free to submit yours in [Let me know!](https://github.com/NaturalSelectionLabs/RSS3/issues/21)
 
-- [Revery](https://revery.so/) [Revery-iOS](https://github.com/NaturalSelectionLabs/Revery-iOS): The first feed aggregator for RSS3.
-- [Web3Pass](https://rss3.bio/): Roses are red violet are blue pass3 will wait for the people who's Squared cool.
+- [Revery](https://revery.so/) [Revery-iOS](https://github.com/NaturalSelectionLabs/Revery-iOS): The first Web3 native social media: track all your followings' cyber activities in one place.
+- [Web3Pass](https://rss3.bio/): You had personal websites in Web1, Twitter and Instagram Pages in Web2, and now RSS3 Bio in Web3.
 - [Mask Network](https://mask.io/): The Portal to the New, Open Internet.
 - [ShowMe](https://showme.fan/): A simple way to connect creators and fans.
+- [inGroup](https://ingroup.chat/): The Decentralized Group Tool.
 - [hexo-deployer-rss3](https://github.com/NaturalSelectionLabs/hexo-deployer-rss3): RSS3 deployer plugin for Hexo.
 - [Re: ID](https://github.com/NaturalSelectionLabs/Re-ID): Browser extension for synchronizing social media with your own RSS3 file.
 - ...
@@ -43,6 +44,7 @@ Feel free to submit yours in [Let me know!](https://github.com/NaturalSelectionL
 - [Mirror](https://mirror.xyz/): Writing as usual. Publishing like never before.
 - [Gitcoin](https://gitcoin.co/): Build and Fund the Open Web Together.
 - [POAP](https://poap.xyz/): The bookmarks of your life.
+- [Arweave](https://www.arweave.org/): Arweave enables you to store documents and applications forever.
 - [Twitter](https://twitter.com/): Twitter is what’s happening and what people are talking about right now.
 - [Misskey](https://misskey.io/): Misskey.ioは、地球で生まれた分散マイクロブログSNSです。
 - [Jike](https://okjike.com/): 记录我 遇见你

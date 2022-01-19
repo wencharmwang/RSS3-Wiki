@@ -73,12 +73,24 @@ module.exports = {
                             ],
                         },
                         {
-                            title: 'Getting Started',
+                            title: 'Protocol',
                             collapsable: false,
-                            sidebarDepth: 1,
                             children: [
                                 'protocol',
-                                'sdk',
+                            ],
+                        },
+                        {
+                            title: 'SDK',
+                            collapsable: false,
+                            children: [
+                                'sdk-list',
+                                'rss3-sdk-for-javascript',
+                            ],
+                        },
+                        {
+                            title: 'API',
+                            collapsable: false,
+                            children: [
                                 'api',
                             ],
                         },

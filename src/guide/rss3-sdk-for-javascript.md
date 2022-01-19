@@ -1,19 +1,21 @@
-# SDK
+# RSS3 SDK for JavaScript
 
-## List
-
-- [RSS3 SDK for JavaScript](#rss3-sdk-for-javascript)
-
-## RSS3 SDK for JavaScript
+## Introduction
 
 [Source code](https://github.com/NaturalSelectionLabs/RSS3-SDK-for-JavaScript)
 
-Compatible with v0.3.1 of [RSS3 protocol](https://github.com/NaturalSelectionLabs/RSS3)
+This is a RSS3 SDK for JavaScript that is kept up to date with the RSS3 protocol and provides easy access to the main modules of the protocol, as well as the ability to automatically calculate signatures.
+
+The SDK is compatible with Node.js environments and major modern browsers, and has good support for TypeScript.
 
 [![test](https://github.com/NaturalSelectionLabs/RSS3-SDK-for-JavaScript/actions/workflows/test.yml/badge.svg)](https://github.com/NaturalSelectionLabs/RSS3-SDK-for-JavaScript/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/NaturalSelectionLabs/RSS3-SDK-for-JavaScript/branch/develop/graph/badge.svg?token=361AKFS8AH)](https://codecov.io/gh/NaturalSelectionLabs/RSS3-SDK-for-JavaScript)
 
-### Install
+## Install
+
+&nbsp;
+
+Installing `rss3` via yarn or npm.
 
 <code-group>
 <code-block title="yarn" active>
@@ -29,22 +31,28 @@ npm install rss3 --save
 </code-block>
 </code-group>
 
-### Usage
+Then reference `rss3` in your project.
 
 ```js
 import RSS3 from 'rss3';
 ```
 
-#### Initialization
+## Getting Started
+
+The first step in using the sdk is to initialise it.
+
+### Initialization
 
 There are 4 ways to initialize the SDK:
 
--   Initialize with external signature method (recommended)
--   Create a brand new account
+-   Create a temporary account (recommended where file modification is not required)
+-   Initialize with external signature method (recommended where file modification may be required)
 -   Initialize with mnemonic
 -   Initialize with private key
 
-For security reasons, unless there is a specific need, you should initialize with external signature method provided by a wallet (hot or cold).
+If you just want to get the information and don't need to commit it, then the easiest way to initialize it is by creating a temporary account (the first way), i.e. just pass the `endpoint` parameter. Don't worry, no file will actually be changed without calling the `file.sync()` method to commit the file.
+
+If you need to make changes to a file, such as changing the avatar or posting a new item, then for security reasons, unless there is a specific need, you should initialize with external signature method provided by a hot or cold wallet (the second way).
 
 And `agentSign` is a kind of agent signature, refer to the `agent_id` and `agent_signature` fields in [RSS3 protocol](https://github.com/NaturalSelectionLabs/RSS3) for more information. Once the user has initialized the SDK with an external signature, an agent signature is generated to sign subsequent changes. The agent information is stored in a suitable and secure place through the `agentStorage` parameter, the default location is the cookies.
 
@@ -139,7 +147,29 @@ const rss3 = new RSS3({
 });
 ```
 
-#### Files
+The next section describes the use of the SDK through several usage scenarios.
+
+### Getting the avatar of a persona
+
+### Adding persona associated accounts
+
+### Getting the list of persona's followers and followings
+
+### Getting assets
+
+### Getting the items stream
+
+### Postting an custom item
+
+### Reply or like other items
+
+TODO
+
+## API
+
+View our full API here
+
+### Files
 
 **files.sync()**
 
@@ -175,7 +205,7 @@ const file = await rss3.files.get(rss3.account.address);
 </code-block>
 </code-group>
 
-#### Account
+### Account
 
 **account.mnemonic**
 
@@ -199,7 +229,7 @@ account.privateKey: string | undefined
 account.address: string
 ```
 
-#### Profile
+### Profile
 
 **profile.get()**
 
@@ -256,7 +286,7 @@ const profiles = rss3.profile.getList([
 </code-block>
 </code-group>
 
-#### Profile.accounts
+### Profile.accounts
 
 **profile.accounts.getSigMessage()**
 
@@ -335,7 +365,7 @@ const account = await rss3.profile.accounts.delete(
 </code-block>
 </code-group>
 
-#### Items
+### Items
 
 **items.getListByPersona()**
 
@@ -369,7 +399,7 @@ const personaTimeline = await rss3.items.getListByPersona({
 </code-block>
 </code-group>
 
-#### Items.auto
+### Items.auto
 
 **items.auto.getListFile()**
 
@@ -435,7 +465,7 @@ const backlinks = await rss3.items.auto.backlinks.getList('0x1234567890123456789
 </code-block>
 </code-group>
 
-#### Items.custom
+### Items.custom
 
 **items.custom.getListFile()**
 
@@ -541,7 +571,7 @@ const backlinks = await rss3.items.custom.backlinks.getList('0x12345678901234567
 </code-block>
 </code-group>
 
-#### Links
+### Links
 
 **links.getListFile()**
 
@@ -674,7 +704,7 @@ const following = await rss3.links.delete('following', '0xd0B85A7bB6B602f63B0202
 </code-block>
 </code-group>
 
-#### Backlinks
+### Backlinks
 
 **backlinks.getListFile()**
 
@@ -708,7 +738,7 @@ const followers = await rss3.backlinks.getList(rss3.account.address, 'following'
 </code-block>
 </code-group>
 
-#### Assets
+### Assets
 
 **assets.getDetails()**
 
@@ -732,7 +762,7 @@ const details = await rss3.assets.getDetails({
 </code-block>
 </code-group>
 
-#### Assets.auto
+### Assets.auto
 
 **assets.auto.getListFile()**
 
@@ -766,7 +796,7 @@ const autoAssets = await rss3.auto.assets.getList('0x123456789012345678901234567
 </code-block>
 </code-group>
 
-#### Assets.custom
+### Assets.custom
 
 **assets.custom.getListFile()**
 
@@ -832,7 +862,7 @@ const otherAsset = await rss3.asset.custom.delete('custom-gk-q-10035911');
 </code-block>
 </code-group>
 
-### Development
+## Development
 
 ```bash
 yarn
