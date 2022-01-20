@@ -6,16 +6,41 @@
 
 While actively working on our ultimate goal, a fully decentralized node, a temporarily centralized version is currently available, you can use <https://prenode.rss3.dev> as the node entry point.
 
-## Supported auto assets/items
+## Supported name service
+
+Same as [Web3 Name Service](https://github.com/NaturalSelectionLabs/Web3-Name-Service)
+
+- ENS: *.eth
+- DAS: *.bit
+- RNS: *.rss3
+
+## Supported account
+
+- EVM+
+- Twitter
+- Misskey
+- Jike
+
+## Supported auto assets
 
 - Gitcoin.Donation
-- Mirror.XYZ
 - xDai.POAP
 - BSC.NFT
 - Ethereum.NFT
 - Polygon.NFT
+- Mirror.XYZ (to be removed)
+
+## Supported auto items
+
+- Gitcoin.Donation
+- xDai.POAP
+- BSC.NFT
+- Ethereum.NFT
+- Polygon.NFT
+- Mirror.XYZ
 - Twitter
 - Misskey
+- Jike
 
 ## API
 

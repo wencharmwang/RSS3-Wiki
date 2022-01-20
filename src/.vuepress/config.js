@@ -88,7 +88,7 @@ module.exports = {
                             ],
                         },
                         {
-                            title: 'API',
+                            title: 'Node',
                             collapsable: false,
                             children: [
                                 'api',

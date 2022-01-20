@@ -34,7 +34,7 @@ npm install rss3 --save
 Then reference `rss3` in your project.
 
 ```js
-import RSS3 from 'rss3';
+import RSS3, { utils as RSS3Utils } from 'rss3';
 ```
 
 ## Getting Started
@@ -151,23 +151,151 @@ The next section describes the use of the SDK through several usage scenarios.
 
 ### Getting the avatar of a persona
 
+Use the `rss3.profile.get` method to get the profile of the specified persona, the avatar is in the profile.
+
+If no persona address is specified, the profile of the currently initialized persona will be returned.
+
+Let's get the avatar of a persona `0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944`
+
+```ts
+const { avatar } = await rss3.profile.get('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944');
+```
+
 ### Adding persona associated accounts
+
+The list of supported accounts is available at [API#Supported account](/guide/api.html#supported-account)
+
+Accounts can be divided into two types: those that are decentralised, including EVM+, and those that belong to centralised platforms, including Twitter Misskey Jike.
+
+Examples of each of these two types are given below.
+
+Let's start by adding current account of MetaMask, please note that this address cannot be duplicated with rss3 instance's main address.
+
+1. Declare this account
+
+```ts
+const account = {
+    tags: ['test account'], // Optional
+    id: RSS3Utils.id.getAccount('EVM+', await signer.getAddress()), // 'EVM+-0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'
+};
+```
+
+2. Calculate the message of signature and sign this message using the MetaMask to prove that the account belongs to us.
+
+```ts
+const signMessage = await rss3.profile.accounts.getSigMessage(account);
+account.signature = await signer.signMessage(signMessage);
+```
+
+3. Add account to rss3 file
+
+```ts
+await rss3.profile.accounts.post(account);
+```
+
+4. Sync the modified file to RSS3 network
+
+```ts
+await rss3.files.sync();
+```
+
+Next let's add another account on a centralised platform, such as Twitter.
+
+1. Add our main address or a name pointing to our main address (see [API#Supported name service](/guide/api.html#supported-name-service)) to the Twitter bio, name or url
+
+2. Declare this account; 3. Add account to rss3 file; 4. Sync the modified file to RSS3 network (Same as above)
+
+```ts
+const account = {
+    id: RSS3Utils.id.getAccount('Twitter', 'DIYgod'), // 'Twitter-DIYgod'
+};
+await rss3.profile.accounts.post(account);
+await rss3.files.sync();
+```
 
 ### Getting the list of persona's followers and followings
 
-### Getting assets
+The protocol defines that each persona can have many types of link, but the protocol does not define what id represent following link. Here we use `following` as the id, you can also define your own link id.
+
+Next let's try to get the persona's following list, that is, the list of link with the id `following`.
+
+```ts
+const list = await rss3.links.getList('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944', 'following');
+```
+
+Now we have a array of addresses, but it's very difficult to get their profiles one by one to present a nice list with avatars and names, so SDK provides a way to get profiles in bulk.
+
+```ts
+const profiles = await rss3.profile.getList(list);
+```
+
+This gives us an array of profiles and addresses, which we can use to render a nice looking list.
+
+The same applies to the list of followers, except that the links are replaced with backlinks.
+
+```ts
+const list = await rss3.backlinks.getList('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944', 'following');
+```
+
+Note that there is a high probability that the list of followers will be large, in which case we will need to load it in segments to avoid performance problems.
+
+```ts
+const profiles = await rss3.profile.getList(list.slice(0, 10));
+```
+
+### Getting assets list
+
+Assets are divided into automatically indexed assets and persona defined assets, here is an example for auto assets.
+
+The list of supported auto assets is available at [API#Supported auto assets](/guide/api.html#supported-auto-assets)
+
+We can get a list of assets of a persona like this
+
+```ts
+const assets = (await rss3.assets.auto.getList('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944')).filter((asset) => !asset.includes('Mirror'));
+```
+
+We then find that we only get an array of asset ids and we don't get their details, such as images and names. This is because the details may be slow to returned back, so a better practice is to render the list first, give them a loading state, then request the details and render the images and other information.
+
+```ts
+const details = await rss3.assets.getDetails({
+    assets,
+    full: true,
+});
+```
+
+Please note that as fetching details from third party sources may be slow, the return value of details may not return all the details of assets requested, nor will it return it in order, so if there are any missing assets then please retry to fetch the missing assets after some time.
+
+We can write a loop to request details.
+
+```ts
+let details = [];
+for (let i = 0; i < 10; i++) {
+    const assetsNoDeails = assets.filter((asset) => !details.find((detail) => detail.id === asset));
+    if (!assetsNoDeails.length) {
+        break;
+    }
+    details = details.concat(await rss3_new.assets.getDetails({
+        assets: assetsNoDeails,
+        full: true,
+    }));
+    myRender(details);
+}
+```
 
 ### Getting the items stream
 
 ### Postting an custom item
 
+TODO
+
 ### Reply or like other items
 
 TODO
 
-## API
+## SDK API
 
-View our full API here
+View our full SDK API here
 
 ### Files
 
@@ -300,7 +428,7 @@ profile.accounts.getSigMessage(account: RSS3Account): Promise<string>
 <code-block title="example">
 ```ts
 const sigMessage = await rss3.profile.accounts.getSigMessage({
-    id: utils.id.getAccount('EVM+', '0x1234567890123456789012345678901234567890'),
+    id: RSS3Utils.id.getAccount('EVM+', '0x1234567890123456789012345678901234567890'),
     tags: ['test'],
 });
 ```
@@ -334,10 +462,8 @@ profile.accounts.post(account: RSS3Account): Promise<RSS3Account>
 
 <code-block title="example">
 ```ts
-import { utils } from 'rss3';
-
 const account = {
-    id: utils.id.getAccount('EVM+', '0x1234567890123456789012345678901234567890'),
+    id: RSS3Utils.id.getAccount('EVM+', '0x1234567890123456789012345678901234567890'),
     tags: ['test'],
 };
 const signature = mySignFun(await rss3.profile.accounts.getSigMessage(account));
@@ -359,7 +485,7 @@ profile.accounts.delete(id: string): Promise<string>
 <code-block title="example">
 ```ts
 const account = await rss3.profile.accounts.delete(
-    utils.id.getAccount('EVM+', '0x1234567890123456789012345678901234567890'),
+    RSS3Utils.id.getAccount('EVM+', '0x1234567890123456789012345678901234567890'),
 );
 ```
 </code-block>
