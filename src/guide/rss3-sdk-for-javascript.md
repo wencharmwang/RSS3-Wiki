@@ -85,6 +85,14 @@ new RSS3(options: IOptionsMnemonic | IOptionsPrivateKey | IOptionsSign);
 
 Example:
 
+**Brand new account**
+
+```ts
+const rss3 = new RSS3({
+    endpoint: 'https://prenode.rss3.dev',
+});
+```
+
 **MetaMask or other ethereum compatible wallet**
 
 <code-group>
@@ -119,14 +127,6 @@ const rss3 = new RSS3({
 ```
 </code-block>
 </code-group>
-
-**Brand new account**
-
-```ts
-const rss3 = new RSS3({
-    endpoint: 'https://prenode.rss3.dev',
-});
-```
 
 **Mnemonic**
 
@@ -289,7 +289,7 @@ for (let i = 0; i < 10; i++) {
 }
 ```
 
-### Getting the items stream
+### Getting items list
 
 The items are divided into items automatically indexed by the node and items submitted by the persona, which are stored in two types of files, plus the automatically indexed items may not be sorted chronologically, making it difficult for the client to accurately compute a chronological list, so the Node and SDK provide a more convenient way of getting items in chronological order.
 
@@ -336,7 +336,7 @@ const page2 = await rss3.items.getListByPersona({
 });
 ```
 
-### Postting an custom item
+### Posting a custom item
 
 Let's start with a plain text item
 
