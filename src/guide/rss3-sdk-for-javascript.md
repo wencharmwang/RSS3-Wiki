@@ -31,7 +31,7 @@ npm install rss3 --save
 </code-block>
 </code-group>
 
-Then reference `rss3` in your project.
+Then reference `rss3` in our project.
 
 ```js
 import RSS3, { utils as RSS3Utils } from 'rss3';
@@ -50,9 +50,9 @@ There are 4 ways to initialize the SDK:
 -   Initialize with mnemonic
 -   Initialize with private key
 
-If you just want to get the information and don't need to commit it, then the easiest way to initialize it is by creating a temporary account (the first way), i.e. just pass the `endpoint` parameter. Don't worry, no file will actually be changed without calling the `file.sync()` method to commit the file.
+If we just want to get the information and don't need to commit it, then the easiest way to initialize it is by creating a temporary account (the first way), i.e. just pass the `endpoint` parameter. Don't worry, no file will actually be changed without calling the `file.sync()` method to commit the file.
 
-If you need to make changes to a file, such as changing the avatar or posting a new item, then for security reasons, unless there is a specific need, you should initialize with external signature method provided by a hot or cold wallet (the second way).
+If we need to make changes to a file, such as changing the avatar or posting a new item, then for security reasons, unless there is a specific need, we should initialize with external signature method provided by a hot or cold wallet (the second way).
 
 And `agentSign` is a kind of agent signature, refer to the `agent_id` and `agent_signature` fields in [RSS3 protocol](https://github.com/NaturalSelectionLabs/RSS3) for more information. Once the user has initialized the SDK with an external signature, an agent signature is generated to sign subsequent changes. The agent information is stored in a suitable and secure place through the `agentStorage` parameter, the default location is the cookies.
 
@@ -215,7 +215,7 @@ await rss3.files.sync();
 
 ### Getting the list of persona's followers and followings
 
-The protocol defines that each persona can have many types of link, but the protocol does not define what id represent following link. Here we use `following` as the id, you can also define your own link id.
+The protocol defines that each persona can have many types of link, but the protocol does not define what id represent following link. Here we use `following` as the id, we can also define our own link id.
 
 Next let's try to get the persona's following list, that is, the list of link with the id `following`.
 
@@ -240,7 +240,13 @@ const list = await rss3.backlinks.getList('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcC
 Note that there is a high probability that the list of followers will be large, in which case we will need to load it in segments to avoid performance problems.
 
 ```ts
-const profiles = await rss3.profile.getList(list.slice(0, 10));
+const page1 = await rss3.profile.getList(list.slice(0, 10));
+```
+
+When the user scrolls to the next section
+
+```ts
+const page2 = await rss3.profile.getList(list.slice(10, 20));
 ```
 
 ### Getting assets list
@@ -275,7 +281,7 @@ for (let i = 0; i < 10; i++) {
     if (!assetsNoDeails.length) {
         break;
     }
-    details = details.concat(await rss3_new.assets.getDetails({
+    details = details.concat(await rss3.assets.getDetails({
         assets: assetsNoDeails,
         full: true,
     }));
@@ -285,9 +291,111 @@ for (let i = 0; i < 10; i++) {
 
 ### Getting the items stream
 
+The items are divided into items automatically indexed by the node and items submitted by the persona, which are stored in two types of files, plus the automatically indexed items may not be sorted chronologically, making it difficult for the client to accurately compute a chronological list, so the Node and SDK provide a more convenient way of getting items in chronological order.
+
+Let's get the last 10 NFT related items form personas followed by persona `0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944`.
+
+```ts
+const page1 = await rss3.items.getListByPersona({
+    limit: 10,
+    persona: '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944',
+    linkID: 'following',
+    fieldLike: 'NFT',
+});
+```
+
+Some of these items are changes to assets, such as getting an NFT, we may also need their details to render the image and name of the assets, which again uses the `rss3.assets.getDetails` method mentioned above.
+
+```ts
+const assets = page1.filter((item) => item?.target?.field?.startsWith('assets-')).map((item) => item.target.field.replace(/^assets-/, ''));
+
+// Same as above
+let details = [];
+for (let i = 0; i < 10; i++) {
+    const assetsNoDeails = assets.filter((asset) => !details.find((detail) => detail.id === asset));
+    if (!assetsNoDeails.length) {
+        break;
+    }
+    details = details.concat(await rss3.assets.getDetails({
+        assets: assetsNoDeails,
+        full: true,
+    }));
+    myRender(details);
+}
+```
+
+When the user scrolls to the next section, we use the time of the last item on the page1 as a tsp parameter to get the next 10 items.
+
+```ts
+const page2 = await rss3.items.getListByPersona({
+    limit: 10,
+    persona: '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944',
+    linkID: 'following',
+    fieldLike: 'NFT',
+    tsp: page1[page1.length - 1].date_created,
+});
+```
+
 ### Postting an custom item
 
-TODO
+Let's start with a plain text item
+
+```ts
+await rss3.items.custom.post({
+    summary: 'I love RSS3',
+});
+```
+
+Sometimes we also want to attach an image or a video to items, we need to upload the resource to the CDN to get an address, then put them in contents.
+
+```ts
+await rss3.items.custom.post({
+    summary: 'I love RSS3',
+    contents: [{
+        type: 'image/jpeg',
+        address: 'https://picsum.photos/200/300',
+    }, {
+        type: 'video/mp4',
+        address: 'https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4',
+    }],
+});
+```
+
+Sometimes we want to post an item that is related to another item, such as commenting on or liking an item.
+
+```ts
+// comment
+await rss3.items.custom.post({
+    summary: 'I love you',
+    link: {
+        id: 'comment',
+        target: '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944-item-auto-1',
+    };
+});
+
+// like
+const likeItem = await rss3.items.custom.post({
+    link: {
+        id: 'like',
+        target: '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944-item-auto-1',
+    };
+});
+```
+
+Then we want to modify the item, for example by unliking it or modifying the summary, then just tell sdk the id of the item you want to modify and the contents of the modified item.
+
+```ts
+await rss3.items.custom.patch({
+    id: likeItem.id,
+    summary: 'New summary',
+});
+```
+
+Finally don't forget to sync your files.
+
+```ts
+await rss3.files.sync();
+```
 
 ### Reply or like other items
 
