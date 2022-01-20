@@ -397,10 +397,6 @@ Finally don't forget to sync your files.
 await rss3.files.sync();
 ```
 
-### Reply or like other items
-
-TODO
-
 ## SDK API
 
 View our full SDK API here
