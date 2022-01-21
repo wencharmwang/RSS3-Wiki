@@ -1,7 +1,3 @@
----
-sidebar: auto
----
-
 # Data
 
 In the current version, which is temporarily centralized, we upload all RSS3 Files to a public [GitHub repository](https://github.com/NaturalSelectionLabs/RSS3-Hub-Data), everyone can view and download them freely.

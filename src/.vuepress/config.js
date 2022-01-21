@@ -16,7 +16,8 @@ module.exports = {
     ],
 
     themeConfig: {
-        repo: 'NaturalSelectionLabs/RSS3-Docs',
+        repo: 'NaturalSelectionLabs',
+        docsRepo: 'NaturalSelectionLabs/RSS3-Docs',
         editLinks: true,
         lastUpdated: true,
         sidebarDepth: 2,
@@ -34,23 +35,19 @@ module.exports = {
                         link: '/guide/',
                     },
                     {
-                        text: 'Data',
-                        link: '/data'
-                    },
-                    {
-                        text: 'Support RSS3',
-                        link: '/support'
+                        text: 'Whitepaper',
+                        link: 'https://rss3.io/#/whitepaper'
                     },
                     {
                         text: 'Learn More',
                         items: [
                             {
-                                text: 'Blog',
-                                link: 'https://rss3.notion.site/'
+                                text: 'Events',
+                                link: '/events'
                             },
                             {
-                                text: 'Whitepaper',
-                                link: 'https://rss3.io/#/whitepaper'
+                                text: 'Blog',
+                                link: 'https://rss3.notion.site/'
                             },
                             {
                                 text: 'Brand Kit',
@@ -59,7 +56,11 @@ module.exports = {
                             {
                                 text: 'Join Us',
                                 link: 'https://rss3.notion.site/Open-Source-Remote-RSS3-Offering-the-Dopest-Positions-Frontend-Full-stack-Decentralized-System--b6fdbffee017449797397f45340de9d4'
-                            }
+                            },
+                            {
+                                text: 'Support RSS3',
+                                link: '/support'
+                            },
                         ]
                     },
                 ],
@@ -92,6 +93,13 @@ module.exports = {
                             collapsable: false,
                             children: [
                                 'api',
+                            ],
+                        },
+                        {
+                            title: 'Data',
+                            collapsable: false,
+                            children: [
+                                'data',
                             ],
                         },
                     ],

@@ -11,5 +11,5 @@ You can support RSS3 via donations.
 We accept donations via the following ways:
 
 -   [Gitcoin](https://gitcoin.co/grants/2679/rss3)
--   Ethereum address: TODO
+-   Ethereum: rss3.eth
 -   Contact us directly: contact@rss3.io
