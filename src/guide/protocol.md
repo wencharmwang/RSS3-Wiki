@@ -2,26 +2,27 @@
 
 Project Link: <https://github.com/NaturalSelectionLabs/RSS3>
 
-RSS3 is a protocol that was created to unify information formats and facilitate the free flow of information. Its index file contains several sections, mainly `profile` `links` `items` `assets`.
+RSS3 is a protocol created to unify information formats and facilitate the free flow of information. Its index file focuses mainly on `items` with supporting sections including `assets`, `profile`, `links` and more.
 
-The protocol is compatible and can be easily integrated with other products, for example you can
+The protocol is highly modularated and can be easily integrated with other protocols, for example you can
 
 - Integrate with various name services to make it easier to find personas' files
+- Integrate with various identity projects where accounts of different networks are already verified
 - Integrate with various content platforms to sync assets and items to files
-- Integrate with various relationship links platforms to subscribe content using external links
+- Integrate with various social graphs to subscribe content with external links
 
 ## Latest draft
 
 Current version: **v0.3.1**
 
-RSS3 is in the form of files on the user side. There are two types of RSS3 files - RSS3Index and RSS3List, and each persona generated file is signed by the persona.
+RSS3 exists in the form of files on the user side. There are two types of RSS3 files - RSS3Index and RSS3List, and each persona-generated file is signed by the persona.
 
 The index file is the entry file named after persona's ethereum address that defines:
 
 - `profile`: The persona's name, avatar, bio and verified accounts
-- `links`: Relationships of current persona with other personas
-- `assets`: Custom assets are the assets posted by the persona, auto assets are the digital assets owned by the persona collected by the node, such as NFT
-- `items`: Custom items are the content posted by the persona, auto items are the dynamics of the persona's related account collected by the node, such as the acquisition dynamics of NFT
+- `items`: The activities of a persona which will be constructed into a feed. Custom items are the content posted by the persona natively on RSS3, while auto items are activities from different networks (e.g. transferring an NFT).
+- `assets`: Assets are the digital assets owned by the persona collected by nodes, such as NFTs. Self-declared custom assets are supported.
+- `links`: Links are relationships toward other objects
 
 <details>
 <summary><strong>Quick Look Interfaces in TypeScript</strong></summary>

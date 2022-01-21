@@ -4,7 +4,7 @@
 
 [Source code](https://github.com/NaturalSelectionLabs/RSS3-SDK-for-JavaScript)
 
-This is a RSS3 SDK for JavaScript that is kept up to date with the RSS3 protocol and provides easy access to the main modules of the protocol, as well as the ability to automatically calculate signatures.
+This is an RSS3 SDK for JavaScript that is kept up-to-date with the RSS3 protocol and provides easy access to the main modules, as well as automatic signature handlings.
 
 The SDK is compatible with Node.js environments and major modern browsers, and has good support for TypeScript.
 
@@ -50,12 +50,6 @@ There are 4 ways to initialize the SDK:
 -   Initialize with mnemonic
 -   Initialize with private key
 
-If we just want to get the information and don't need to commit it, then the easiest way to initialize it is by creating a temporary account (the first way), i.e. just pass the `endpoint` parameter. Don't worry, no file will actually be changed without calling the `file.sync()` method to commit the file.
-
-If we need to make changes to a file, such as changing the avatar or posting a new item, then for security reasons, unless there is a specific need, we should initialize with external signature method provided by a hot or cold wallet (the second way).
-
-And `agentSign` is a kind of agent signature, refer to the `agent_id` and `agent_signature` fields in [RSS3 protocol](https://github.com/NaturalSelectionLabs/RSS3) for more information. Once the user has initialized the SDK with an external signature, an agent signature is generated to sign subsequent changes. The agent information is stored in a suitable and secure place through the `agentStorage` parameter, the default location is the cookies.
-
 ```ts
 interface IOptions {
     endpoint: string; // The RSS3 network endpoint
@@ -83,15 +77,15 @@ export interface IOptionsSign extends IOptions {
 new RSS3(options: IOptionsMnemonic | IOptionsPrivateKey | IOptionsSign);
 ```
 
-Example:
-
-**Brand new account**
+**If the app only needs get information (e.g. activity feed or assets) from the RSS3 network without committing changes, the easiest way to initialize it is by creating a temporary account (the first way), i.e. just pass the `endpoint` parameter.**
 
 ```ts
 const rss3 = new RSS3({
     endpoint: 'https://prenode.rss3.dev',
 });
 ```
+
+**If the app wants to help users make changes to a file (e.g. posting a new item or adding a new link), then, for security reasons, unless there is a specific need, we should initialize with external signature method provided by a hot or cold wallet (the second way).**
 
 **MetaMask or other ethereum compatible wallet**
 
@@ -125,6 +119,12 @@ const rss3 = new RSS3({
     sign: async (data) => await web3.eth.personal.sign(data, address),
 });
 ```
+
+And `agentSign` is a type of agent signature - refer to the `agent_id` and `agent_signature` fields in [RSS3 protocol](https://github.com/NaturalSelectionLabs/RSS3) for more information. Once the user has initialized the SDK with an external signature, an agent signature is generated to sign subsequent changes. The agent information is stored in a suitable and secure place through the `agentStorage` parameter, and the default location is the cookies.
+
+
+We can also initialize the SDK with mnemonic or private keys, though not highly recommended.
+
 </code-block>
 </code-group>
 
@@ -149,152 +149,36 @@ const rss3 = new RSS3({
 
 The next section describes the use of the SDK through several usage scenarios.
 
-### Getting the avatar of a persona
+### Getting the Activity Feed of a Persona
 
-Use the `rss3.profile.get` method to get the profile of the specified persona, the avatar is in the profile.
+Items in the activity feed are divided into auto items indexed by the node and items submitted by the persona with signature. Therefore, items are stored in two types of files, and since auto indexed items may not be sorted chronologically, it is difficult for the client to accurately compute a chronological list. So the Node and SDK provide a more convenient way of getting items in chronological order.
 
-If no persona address is specified, the profile of the currently initialized persona will be returned.
-
-Let's get the avatar of a persona `0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944`
-
+If we want to get the last 10 activity items for a specific persona `0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944`:
 ```ts
-const { avatar } = await rss3.profile.get('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944');
-```
-
-### Adding persona associated accounts
-
-The list of supported accounts is available at [API#Supported account](/guide/api.html#supported-account)
-
-Accounts can be divided into two types: those that are decentralised, including EVM+, and those that belong to centralised platforms, including Twitter Misskey Jike.
-
-Examples of each of these two types are given below.
-
-Let's start by adding current account of MetaMask, please note that this address cannot be duplicated with rss3 instance's main address.
-
-1. Declare this account
-
-```ts
-const account = {
-    tags: ['test account'], // Optional
-    id: RSS3Utils.id.getAccount('EVM+', await signer.getAddress()), // 'EVM+-0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'
-};
-```
-
-2. Calculate the message of signature and sign this message using the MetaMask to prove that the account belongs to us.
-
-```ts
-const signMessage = await rss3.profile.accounts.getSigMessage(account);
-account.signature = await signer.signMessage(signMessage);
-```
-
-3. Add account to rss3 file
-
-```ts
-await rss3.profile.accounts.post(account);
-```
-
-4. Sync the modified file to RSS3 network
-
-```ts
-await rss3.files.sync();
-```
-
-Next let's add another account on a centralised platform, such as Twitter.
-
-1. Add our main address or a name pointing to our main address (see [API#Supported name service](/guide/api.html#supported-name-service)) to the Twitter bio, name or url
-
-2. Declare this account; 3. Add account to rss3 file; 4. Sync the modified file to RSS3 network (Same as above)
-
-```ts
-const account = {
-    id: RSS3Utils.id.getAccount('Twitter', 'DIYgod'), // 'Twitter-DIYgod'
-};
-await rss3.profile.accounts.post(account);
-await rss3.files.sync();
-```
-
-### Getting the list of persona's followers and followings
-
-The protocol defines that each persona can have many types of link, but the protocol does not define what id represent following link. Here we use `following` as the id, we can also define our own link id.
-
-Next let's try to get the persona's following list, that is, the list of link with the id `following`.
-
-```ts
-const list = await rss3.links.getList('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944', 'following');
-```
-
-Now we have a array of addresses, but it's very difficult to get their profiles one by one to present a nice list with avatars and names, so SDK provides a way to get profiles in bulk.
-
-```ts
-const profiles = await rss3.profile.getList(list);
-```
-
-This gives us an array of profiles and addresses, which we can use to render a nice looking list.
-
-The same applies to the list of followers, except that the links are replaced with backlinks.
-
-```ts
-const list = await rss3.backlinks.getList('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944', 'following');
-```
-
-Note that there is a high probability that the list of followers will be large, in which case we will need to load it in segments to avoid performance problems.
-
-```ts
-const page1 = await rss3.profile.getList(list.slice(0, 10));
-```
-
-When the user scrolls to the next section
-
-```ts
-const page2 = await rss3.profile.getList(list.slice(10, 20));
-```
-
-### Getting assets list
-
-Assets are divided into automatically indexed assets and persona defined assets, here is an example for auto assets.
-
-The list of supported auto assets is available at [API#Supported auto assets](/guide/api.html#supported-auto-assets)
-
-We can get a list of assets of a persona like this
-
-```ts
-const assets = (await rss3.assets.auto.getList('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944')).filter((asset) => !asset.includes('Mirror'));
-```
-
-We then find that we only get an array of asset ids and we don't get their details, such as images and names. This is because the details may be slow to returned back, so a better practice is to render the list first, give them a loading state, then request the details and render the images and other information.
-
-```ts
-const details = await rss3.assets.getDetails({
-    assets,
-    full: true,
+const page1 = await rss3.items.getListByPersona({
+    limit: 10,
+    persona: '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944',  
 });
 ```
 
-Please note that as fetching details from third party sources may be slow, the return value of details may not return all the details of assets requested, nor will it return it in order, so if there are any missing assets then please retry to fetch the missing assets after some time.
-
-We can write a loop to request details.
-
+If we want to leverage existing links (e.g. following) in the RSS3 networks for a list of items from other personas followed by `0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944`:
 ```ts
-let details = [];
-for (let i = 0; i < 10; i++) {
-    const assetsNoDeails = assets.filter((asset) => !details.find((detail) => detail.id === asset));
-    if (!assetsNoDeails.length) {
-        break;
-    }
-    details = details.concat(await rss3.assets.getDetails({
-        assets: assetsNoDeails,
-        full: true,
-    }));
-    myRender(details);
-}
+const page1 = await rss3.items.getListByPersona({
+    limit: 10,
+    persona: '0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944',
+    linkID: 'following',
+});
 ```
 
-### Getting items list
+If we use an external social graph (e.g. CyberConnect or Mem) and already have a list of following addresses:
+```ts
+const page1 = await rss3.items.getListByPersona({
+    limit: 10,
+    personaList: list,
+});
+```
 
-The items are divided into items automatically indexed by the node and items submitted by the persona, which are stored in two types of files, plus the automatically indexed items may not be sorted chronologically, making it difficult for the client to accurately compute a chronological list, so the Node and SDK provide a more convenient way of getting items in chronological order.
-
-Let's get the last 10 NFT related items form personas followed by persona `0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944`.
-
+If we only want to get specific type(s) of activities, then:
 ```ts
 const page1 = await rss3.items.getListByPersona({
     limit: 10,
@@ -307,21 +191,20 @@ const page1 = await rss3.items.getListByPersona({
 Some of these items are changes to assets, such as getting an NFT, we may also need their details to render the image and name of the assets, which again uses the `rss3.assets.getDetails` method mentioned above.
 
 ```ts
-const assets = page1.filter((item) => item?.target?.field?.startsWith('assets-')).map((item) => item.target.field.replace(/^assets-/, ''));
+const assets = page1.filter((item) => item?.target?.field?.startsWith('assets-')).slice(10).map((item) => item.target.field.replace(/^assets-/, ''));
 
-// Same as above
-let details = [];
-for (let i = 0; i < 10; i++) {
-    const assetsNoDeails = assets.filter((asset) => !details.find((detail) => detail.id === asset));
-    if (!assetsNoDeails.length) {
-        break;
-    }
-    details = details.concat(await rss3.assets.getDetails({
-        assets: assetsNoDeails,
-        full: true,
-    }));
-    myRender(details);
-}
+// get asset details for each item
+let details = await rss3.assets.getDetails({
+    assets: assets,
+    full: true,
+});
+```
+
+Also, if we want to get the profile from the RSS3 Network, e.g. nickname and avatar, of a list of personas from the item list, we can:
+
+```ts
+const profileSet = page1.filter((item) => item?.target?.field?.startsWith("assets-")).slice(10).map((item) => item.id.split("-")[0]);
+let profiles = await rss3.profile.getList(profileSet);
 ```
 
 When the user scrolls to the next section, we use the time of the last item on the page1 as a tsp parameter to get the next 10 items.
@@ -336,7 +219,7 @@ const page2 = await rss3.items.getListByPersona({
 });
 ```
 
-### Posting a custom item
+### Posting a Custom Item for the Persona
 
 Let's start with a plain text item
 
@@ -346,7 +229,7 @@ await rss3.items.custom.post({
 });
 ```
 
-Sometimes we also want to attach an image or a video to items, we need to upload the resource to the CDN to get an address, then put them in contents.
+Sometimes we also want to attach an image or a video to items, we need to upload the resource to an external storage to get an address, then put it in the content.
 
 ```ts
 await rss3.items.custom.post({
@@ -382,7 +265,7 @@ const likeItem = await rss3.items.custom.post({
 });
 ```
 
-Then we want to modify the item, for example by unliking it or modifying the summary, then just tell sdk the id of the item you want to modify and the contents of the modified item.
+Then if we want to modify the item, for example, by unliking it or modifying the summary, just tell the sdk the id of the item you want to modify and the content of the modified item.
 
 ```ts
 await rss3.items.custom.patch({
@@ -395,6 +278,150 @@ Finally don't forget to sync your files.
 
 ```ts
 await rss3.files.sync();
+```
+
+### Getting assets list
+
+Assets are divided into automatically indexed assets and self-declared assets (WIP), here is an example for auto assets.
+
+The list of supported auto assets is available at [API#Supported auto assets](/guide/api.html#supported-auto-assets)
+
+We can get a list of assets of a persona like this
+
+```ts
+const assets = (await rss3.assets.auto.getList('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944')).filter((asset) => !asset.includes('Mirror'));
+```
+
+We will then find that we only get an array of asset ids without details, such as images or names. This is because details of some assets may a little longer for indexing. So a better practice is to render the list first, give them a loading state, then request the details and render the images and other information afterwards. 
+
+```ts
+const details = await rss3.assets.getDetails({
+    assets,
+    full: true,
+});
+```
+
+Please note that as fetching details from third party sources may be slow, the return value of details may not return all the details of assets requested, nor will it return it in order. So if there are any missing assets, retry to fetch the missing assets after some time.
+
+We can write a loop to request details.
+
+```ts
+let details = [];
+for (let i = 0; i < 10; i++) {
+    const assetsNoDeails = assets.filter((asset) => !details.find((detail) => detail.id === asset));
+    if (!assetsNoDeails.length) {
+        break;
+    }
+    details = details.concat(await rss3.assets.getDetails({
+        assets: assetsNoDeails,
+        full: true,
+    }));
+    myRender(details);
+}
+```
+
+### Getting Details of a Persona
+
+While external DID projects are supported, e.g. ENS, self.id and next.id, you can also get profile details on the RSS3 Network. Use the `rss3.profile.get` method to get the profile of the specified persona.
+
+If no persona address is specified, the profile of the currently initialized persona will be returned.
+
+Let's get the account details of a persona `0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944`
+
+```ts
+const { details } = await rss3.profile.get('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944');
+```
+
+### Adding persona associated accounts
+
+The list of supported accounts is available at [API#Supported account](/guide/api.html#supported-account)
+
+Accounts can be divided into two types: those that are decentralised, say blockchains, and those that belong to centralised platforms, including Twitter, Misskey and Jike.
+
+Examples of each of these two types are given below.
+
+Let's start by adding the current account of MetaMask. Please note that this address cannot be duplicated with rss3 instance's main address.
+
+1. Declare this account
+
+```ts
+const account = {
+    tags: ['test account'], // Optional
+    id: RSS3Utils.id.getAccount('EVM+', await signer.getAddress()), // 'EVM+-0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944'
+};
+```
+
+2. Calculate the signature message and sign this message using the MetaMask to prove that the account belongs to us.
+
+```ts
+const signMessage = await rss3.profile.accounts.getSigMessage(account);
+account.signature = await signer.signMessage(signMessage);
+```
+
+3. Add account to rss3 file
+
+```ts
+await rss3.profile.accounts.post(account);
+```
+
+4. Sync the modified file to RSS3 network
+
+```ts
+await rss3.files.sync();
+```
+
+Next let's add another account on a centralised platform, such as Twitter.
+
+1. Add our main address or a name pointing to our main address (see [API#Supported name service](/guide/api.html#supported-name-service)) to the Twitter bio, name or url
+
+2. Declare this account; 
+
+3. Add account to rss3 file; 
+
+4. Sync the modified file to RSS3 network (Same as above)
+
+```ts
+const account = {
+    id: RSS3Utils.id.getAccount('Twitter', 'DIYgod'), // 'Twitter-DIYgod'
+};
+await rss3.profile.accounts.post(account);
+await rss3.files.sync();
+```
+
+### Getting the list of persona's followers and followings
+
+The protocol defines that each persona can have many types of link, but the protocol does not define what id represent following link. **Note that it is not necessary to use links within the RSS3 Network, all external social graphs are supported.** Here we use `following` as the id. We can also define our own link id.
+
+Next let's try to get the persona's following list, that is, the list of link with the id `following`.
+
+```ts
+const list = await rss3.links.getList('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944', 'following');
+```
+
+Now we have a array of addresses, but it's very difficult to get their profiles one by one to present a nice list with avatars and names, so the SDK provides a way to get profiles in bulk.
+
+```ts
+const profiles = await rss3.profile.getList(list);
+```
+
+This gives us an array of profiles and addresses, which we can use to render a nice looking list.
+
+The same applies to the list of followers, except that the links are replaced with backlinks.
+
+```ts
+const list = await rss3.backlinks.getList('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944', 'following');
+```
+
+Note that there is a high probability that the list of followers will be large, in which case we will need to load it in segments to avoid performance issues.
+
+```ts
+const page1 = await rss3.profile.getList(list.slice(0, 10));
+```
+
+When the user scrolls to the next section
+
+```ts
+const page2 = await rss3.profile.getList(list.slice(10, 20));
 ```
 
 ## SDK API

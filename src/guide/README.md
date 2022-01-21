@@ -4,23 +4,23 @@
     <img src="https://rss3.mypinata.cloud/ipfs/QmUG6H3Z7D5P511shn7sB4CPmpjH5uZWu4m5mWX7U3Gqbu" alt="RSS3" width="300">
 </p>
 
-> Derived from the best out of RSS, RSS3 is an open, neutral, and decentralized protocol designed for every cyber existence.
+> RSS3 is a next-generation feed standard that aims to support efficient and decentralized information distribution.
 
-RSS3 is a protocol that was created to unify information formats and facilitate the free flow of information. Its index file contains several sections, mainly `profile` `links` `items` `assets`. Details of the RSS3 protocol can be found [here](/guide/protocol.html).
+RSS3 is a protocol created to unify information formats and facilitate the free flow of information. Its index file focuses mainly on `items` with supporting sections including `assets`, `profile`, `links` and more. Details of the RSS3 protocol can be found [here](/guide/protocol.html).
 
-After understanding the content of the protocol, the quickest way to get started is to use the [SDK](/guide/sdk.html), or to request [API](/guide/api.html) directly.
+With a basic understanding of the protocol, the quickest way to get started is to use the [SDK](/guide/sdk.html), or to request [API](/guide/api.html) directly.
 
-Reading [our white paper](https://rss3.io/#/whitepaper) is also a good way to learn more about us.
+Reading [our white paper](https://rss3.io/#/whitepaper) is also a good way to learn more about the protocol and the upcoming decentralized network.
 
 If you have any questions, you can find us on [GitHub](https://github.com/NaturalSelectionLabs/RSS3) [Discord](https://discord.com/invite/aGuwzF2hW4) [Telegram](https://t.me/rss3_en) or [Twitter](https://twitter.com/rss3_). We'll be happy to help!
 
-If you would like to use RSS3 on your project, we would be delighted if you [let us know](https://github.com/NaturalSelectionLabs/RSS3/issues/21). We will provide technical or operational assistance if you need it.
+RSS3 and its affiliated network is open and permissionless - If you are using RSS3 for your project, we would be delighted if you [let us know](https://github.com/NaturalSelectionLabs/RSS3/issues/21). We will provide technical or operational assistance if you need it.
 
 ## Ecosystem
 
 ### Who use RSS3?
 
-Feel free to submit yours in [Let me know!](https://github.com/NaturalSelectionLabs/RSS3/issues/21)
+Feel free to submit yours in [Let us know!](https://github.com/NaturalSelectionLabs/RSS3/issues/21)
 
 - [Revery](https://revery.so/) [Revery-iOS](https://github.com/NaturalSelectionLabs/Revery-iOS): The first Web3 native social media: track all your followings' cyber activities in one place.
 - [Web3Pass](https://rss3.bio/): You had personal websites in Web1, Twitter and Instagram Pages in Web2, and now RSS3 Bio in Web3.
@@ -31,7 +31,7 @@ Feel free to submit yours in [Let me know!](https://github.com/NaturalSelectionL
 - [Re: ID](https://github.com/NaturalSelectionLabs/Re-ID): Browser extension for synchronizing social media with your own RSS3 file.
 - ...
 
-### Supported platforms
+### Supported Networks
 
 **Blockchains**
 
@@ -40,7 +40,7 @@ Feel free to submit yours in [Let me know!](https://github.com/NaturalSelectionL
 - [Binance Smart Chain](https://www.binance.org/en): Fast, decentralized, affordable and secure.
 - [Arweave](https://www.arweave.org/): Arweave enables you to store documents and applications forever.
 
-**Contents**
+**Applications**
 
 - [Mirror](https://mirror.xyz/): Writing as usual. Publishing like never before.
 - [Gitcoin](https://gitcoin.co/): Build and Fund the Open Web Together.
