@@ -149,7 +149,7 @@ const rss3 = new RSS3({
 
 The next section describes the use of the SDK through several usage scenarios.
 
-### Getting the activity feed of a persona
+### Getting Activity Feeds
 
 Items in the activity feed are divided into auto items indexed by the node and items submitted by the persona with signature. Therefore, items are stored in two types of files, and since auto indexed items may not be sorted chronologically, it is difficult for the client to accurately compute a chronological list. So the Node and SDK provide a more convenient way of getting items in chronological order.
 
@@ -233,7 +233,7 @@ const page2 = await rss3.items.getListByPersona({
 });
 ```
 
-### Posting a custom item for the persona
+### Posting Custom Items
 
 Let's start with a plain text item
 
@@ -294,7 +294,7 @@ Finally don't forget to sync your files.
 await rss3.files.sync();
 ```
 
-### Getting assets list
+### Getting Asset List
 
 Assets are divided into automatically indexed assets and self-declared assets (WIP), here is an example for auto assets.
 
@@ -334,7 +334,7 @@ for (let i = 0; i < 10; i++) {
 }
 ```
 
-### Getting details of a persona
+### Getting Profile Details
 
 While external DID projects are supported, e.g. ENS, self.id and next.id, you can also get profile details on the RSS3 Network. Use the `rss3.profile.get` method to get the profile of the specified persona.
 
@@ -346,7 +346,7 @@ Let's get the account details of a persona `0xC8b960D09C0078c18Dcbe7eB9AB9d816Bc
 const { details } = await rss3.profile.get('0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944');
 ```
 
-### Adding persona associated accounts
+### Adding Persona's Associated Accounts
 
 The list of supported accounts is available at [API#Supported account](/guide/api.html#supported-account)
 
@@ -398,7 +398,7 @@ await rss3.profile.accounts.post(account);
 await rss3.files.sync();
 ```
 
-### Getting the list of persona's followers and followings
+### Getting the List of Persona's Links
 
 The protocol defines that each persona can have many types of link, but the protocol does not define what id represent following link. **Note that it is not necessary to use links within the RSS3 Network, all external social graphs are supported.** Here we use `following` as the id. We can also define our own link id.
 
