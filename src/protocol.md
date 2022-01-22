@@ -4,7 +4,7 @@ Project Link: <https://github.com/NaturalSelectionLabs/RSS3>
 
 RSS3 is a protocol created to unify information formats and facilitate the free flow of information. Its index file focuses mainly on `items` with supporting sections including `assets`, `profile`, `links` and more.
 
-The protocol is highly modularated and can be easily integrated with other protocols, for example you can
+The protocol is compatible, inclusive, highly modularated and can be easily integrated with other protocols, for example you can
 
 - Integrate with various name services to make it easier to find personas' files
 - Integrate with various identity projects where accounts of different networks are already verified
@@ -19,8 +19,8 @@ RSS3 exists in the form of files on the user side. There are two types of RSS3 f
 
 The index file is the entry file named after persona's ethereum address that defines:
 
+- `items`: The activities of a persona which will be constructed into a feed. Custom items are the content posted by the persona natively on RSS3, while auto items are activities from different networks (e.g. transferring an NFT)
 - `profile`: The persona's name, avatar, bio and verified accounts
-- `items`: The activities of a persona which will be constructed into a feed. Custom items are the content posted by the persona natively on RSS3, while auto items are activities from different networks (e.g. transferring an NFT).
 - `assets`: Assets are the digital assets owned by the persona collected by nodes, such as NFTs. Self-declared custom assets are supported.
 - `links`: Links are relationships toward other objects
 

@@ -32,7 +32,7 @@ module.exports = {
                 nav: [
                     {
                         text: 'Guide',
-                        link: '/guide/',
+                        link: '/',
                     },
                     {
                         text: 'Whitepaper',
@@ -65,7 +65,7 @@ module.exports = {
                     },
                 ],
                 sidebar: {
-                    '/guide/': [
+                    '/': [
                         {
                             title: 'Guide',
                             collapsable: false,

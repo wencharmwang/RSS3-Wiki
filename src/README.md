@@ -14,7 +14,7 @@ Reading [our white paper](https://rss3.io/#/whitepaper) is also a good way to le
 
 If you have any questions, you can find us on [GitHub](https://github.com/NaturalSelectionLabs/RSS3) [Discord](https://discord.com/invite/aGuwzF2hW4) [Telegram](https://t.me/rss3_en) or [Twitter](https://twitter.com/rss3_). We'll be happy to help!
 
-RSS3 and its affiliated network is open and permissionless - If you are using RSS3 for your project, we would be delighted if you [let us know](https://github.com/NaturalSelectionLabs/RSS3/issues/21). We will provide technical or operational assistance if you need it.
+RSS3 and its affiliated network are open and permissionless - If you are using RSS3 for your project, we would be delighted if you [let us know](https://github.com/NaturalSelectionLabs/RSS3/issues/21). We will provide technical or operational assistance if you need it.
 
 ## Ecosystem
 

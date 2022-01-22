@@ -77,7 +77,9 @@ export interface IOptionsSign extends IOptions {
 new RSS3(options: IOptionsMnemonic | IOptionsPrivateKey | IOptionsSign);
 ```
 
-**If the app only needs get information (e.g. activity feed or assets) from the RSS3 network without committing changes, the easiest way to initialize it is by creating a temporary account (the first way), i.e. just pass the `endpoint` parameter.**
+**Temporary account**
+
+If the app only needs get information (e.g. activity feed or assets) from the RSS3 network without committing changes, the easiest way to initialize it is by creating a temporary account (the first way), i.e. just pass the `endpoint` parameter.
 
 ```ts
 const rss3 = new RSS3({
@@ -85,9 +87,9 @@ const rss3 = new RSS3({
 });
 ```
 
-**If the app wants to help users make changes to a file (e.g. posting a new item or adding a new link), then, for security reasons, unless there is a specific need, we should initialize with external signature method provided by a hot or cold wallet (the second way).**
-
 **MetaMask or other ethereum compatible wallet**
+
+If the app wants to help users make changes to a file (e.g. posting a new item or adding a new link), then, for security reasons, unless there is a specific need, we should initialize with external signature method provided by a hot or cold wallet (the second way).
 
 <code-group>
 <code-block title="ethers" active>
@@ -119,14 +121,12 @@ const rss3 = new RSS3({
     sign: async (data) => await web3.eth.personal.sign(data, address),
 });
 ```
+</code-block>
+</code-group>
 
 And `agentSign` is a type of agent signature - refer to the `agent_id` and `agent_signature` fields in [RSS3 protocol](https://github.com/NaturalSelectionLabs/RSS3) for more information. Once the user has initialized the SDK with an external signature, an agent signature is generated to sign subsequent changes. The agent information is stored in a suitable and secure place through the `agentStorage` parameter, and the default location is the cookies.
 
-
 We can also initialize the SDK with mnemonic or private keys, though not highly recommended.
-
-</code-block>
-</code-group>
 
 **Mnemonic**
 
@@ -149,11 +149,12 @@ const rss3 = new RSS3({
 
 The next section describes the use of the SDK through several usage scenarios.
 
-### Getting the Activity Feed of a Persona
+### Getting the activity feed of a persona
 
 Items in the activity feed are divided into auto items indexed by the node and items submitted by the persona with signature. Therefore, items are stored in two types of files, and since auto indexed items may not be sorted chronologically, it is difficult for the client to accurately compute a chronological list. So the Node and SDK provide a more convenient way of getting items in chronological order.
 
 If we want to get the last 10 activity items for a specific persona `0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944`:
+
 ```ts
 const page1 = await rss3.items.getListByPersona({
     limit: 10,
@@ -162,6 +163,7 @@ const page1 = await rss3.items.getListByPersona({
 ```
 
 If we want to leverage existing links (e.g. following) in the RSS3 networks for a list of items from other personas followed by `0xC8b960D09C0078c18Dcbe7eB9AB9d816BcCa8944`:
+
 ```ts
 const page1 = await rss3.items.getListByPersona({
     limit: 10,
@@ -171,6 +173,7 @@ const page1 = await rss3.items.getListByPersona({
 ```
 
 If we use an external social graph (e.g. CyberConnect or Mem) and already have a list of following addresses:
+
 ```ts
 const page1 = await rss3.items.getListByPersona({
     limit: 10,
@@ -179,6 +182,7 @@ const page1 = await rss3.items.getListByPersona({
 ```
 
 If we only want to get specific type(s) of activities, then:
+
 ```ts
 const page1 = await rss3.items.getListByPersona({
     limit: 10,
@@ -188,22 +192,32 @@ const page1 = await rss3.items.getListByPersona({
 });
 ```
 
+Possible values for field is available at [API#Supported auto items](/guide/api.html#supported-auto-items).
+
 Some of these items are changes to assets, such as getting an NFT, we may also need their details to render the image and name of the assets, which again uses the `rss3.assets.getDetails` method mentioned above.
 
 ```ts
-const assets = page1.filter((item) => item?.target?.field?.startsWith('assets-')).slice(10).map((item) => item.target.field.replace(/^assets-/, ''));
+const assets = page1.filter((item) => item?.target?.field?.startsWith('assets-')).map((item) => item.target.field.replace(/^assets-/, ''));
 
-// get asset details for each item
-let details = await rss3.assets.getDetails({
-    assets: assets,
-    full: true,
-});
+// Same as above
+let details = [];
+for (let i = 0; i < 10; i++) {
+    const assetsNoDeails = assets.filter((asset) => !details.find((detail) => detail.id === asset));
+    if (!assetsNoDeails.length) {
+        break;
+    }
+    details = details.concat(await rss3.assets.getDetails({
+        assets: assetsNoDeails,
+        full: true,
+    }));
+    myRender(details);
+}
 ```
 
 Also, if we want to get the profile from the RSS3 Network, e.g. nickname and avatar, of a list of personas from the item list, we can:
 
 ```ts
-const profileSet = page1.filter((item) => item?.target?.field?.startsWith("assets-")).slice(10).map((item) => item.id.split("-")[0]);
+const profileSet = page1.filter((item) => item?.target?.field?.startsWith('assets-')).map((item) => utils.id.parse(item.id).persona);
 let profiles = await rss3.profile.getList(profileSet);
 ```
 
@@ -219,7 +233,7 @@ const page2 = await rss3.items.getListByPersona({
 });
 ```
 
-### Posting a Custom Item for the Persona
+### Posting a custom item for the persona
 
 Let's start with a plain text item
 
@@ -320,7 +334,7 @@ for (let i = 0; i < 10; i++) {
 }
 ```
 
-### Getting Details of a Persona
+### Getting details of a persona
 
 While external DID projects are supported, e.g. ENS, self.id and next.id, you can also get profile details on the RSS3 Network. Use the `rss3.profile.get` method to get the profile of the specified persona.
 
@@ -351,7 +365,7 @@ const account = {
 };
 ```
 
-2. Calculate the signature message and sign this message using the MetaMask to prove that the account belongs to us.
+2. Compute the signature message and sign this message using the MetaMask to prove that the account belongs to us.
 
 ```ts
 const signMessage = await rss3.profile.accounts.getSigMessage(account);
@@ -374,11 +388,7 @@ Next let's add another account on a centralised platform, such as Twitter.
 
 1. Add our main address or a name pointing to our main address (see [API#Supported name service](/guide/api.html#supported-name-service)) to the Twitter bio, name or url
 
-2. Declare this account; 
-
-3. Add account to rss3 file; 
-
-4. Sync the modified file to RSS3 network (Same as above)
+2. Declare this account; 3. Add account to rss3 file; 4. Sync the modified file to RSS3 network (Same as above)
 
 ```ts
 const account = {
