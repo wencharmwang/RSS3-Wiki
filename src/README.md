@@ -27,6 +27,7 @@ Feel free to submit yours in [Let us know!](https://github.com/NaturalSelectionL
 - [Mask Network](https://mask.io/): The Portal to the New, Open Internet.
 - [ShowMe](https://showme.fan/): A simple way to connect creators and fans.
 - [inGroup](https://ingroup.chat/): The Decentralized Group Tool.
+- [Flowns](https://www.flowns.org/): An opening protocol of identities and assets in digital world.
 - [hexo-deployer-rss3](https://github.com/NaturalSelectionLabs/hexo-deployer-rss3): RSS3 deployer plugin for Hexo.
 - [Re: ID](https://github.com/NaturalSelectionLabs/Re-ID): Browser extension for synchronizing social media with your own RSS3 file.
 - ...
